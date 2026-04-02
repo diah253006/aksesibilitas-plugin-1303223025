@@ -41,42 +41,45 @@
 
     console.log("TTS READY");
 
+    
     document.addEventListener("click", function (e) {
 
-        const btn = e.target.closest("button, [role='button'], .btn, a");
-        if (!btn) return;
+    const btn = e.target.closest("button");
+    if (!btn) return;
 
-        const text = btn.innerText
-    .toLowerCase()
-    .replace(/[^\w\s]/gi, "") // hapus emoji & simbol
-    .trim();
-    console.log("TEXT:", text);
-        // PRIORITAS: ATRIBUT
-        if (btn.matches("[data-apr-tts]")) {
-            console.log("Klik baca (atribut)");
-            const target = btn.getAttribute("data-target") || "body";
-            TTS.start(target);
-            return;
-        }
+    const text = (btn.innerText || "").toLowerCase().trim();
 
-        if (btn.matches("[data-apr-tts-stop]")) {
-            console.log("Klik stop (atribut)");
-            TTS.stop();
-            return;
-        }
+    console.log("TEXT:", text); // 🔥 DEBUG
 
-        // AUTO DETECT (lebih aman)
-        if (text.includes("baca")) {
-            console.log("Klik baca (auto)");
-            const target = document.querySelector("#mainContent") ? "#mainContent" : "body";
-            TTS.start(target);
-        }
+    // ========================
+    // 1. PRIORITAS: ATRIBUT
+    // ========================
+    if (btn.hasAttribute("data-apr-tts")) {
+        console.log("Klik baca (atribut)");
+        const target = btn.getAttribute("data-target") || "body";
+        TTS.start(target);
+        return;
+    }
 
-        if (text.includes("stop") || text.includes("berhenti")) {
-            console.log("Klik stop (auto)");
-            TTS.stop();
-        }
+    if (btn.hasAttribute("data-apr-tts-stop")) {
+        console.log("Klik stop (atribut)");
+        TTS.stop();
+        return;
+    }
 
-    });
+    // ========================
+    // 2. FALLBACK: AUTO DETECT
+    // ========================
+    if (text.includes("baca")) {
+        console.log("Klik baca (auto)");
+        TTS.start("#mainContent");
+    }
+
+    if (text.includes("stop") || text.includes("berhenti")) {
+        console.log("Klik stop (auto)");
+        TTS.stop();
+    }
+
+});
 
 })();
