@@ -37,6 +37,7 @@
         document.querySelectorAll("[data-apr-tts]").forEach(btn => {
             btn.addEventListener("click", () => {
                 const target = btn.getAttribute("data-target") || "body";
+                console.log("Tombol klik baca");
                 TTS.start(target);
             });
         });
