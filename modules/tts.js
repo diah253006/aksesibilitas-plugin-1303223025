@@ -28,20 +28,21 @@
 
         // Cari semua elemen dengan atribut khusus
         document.querySelectorAll("[data-apr-tts]").forEach(btn => {
-
-            btn.addEventListener("click", () => {
-                const target = btn.getAttribute("data-target") || "body";
-                TTS.start(target);
+        btn.addEventListener("click", function () {
+            const target = this.getAttribute("data-target") || "body";
+            window.APR_TTS.start(target);
             });
 
         });
 
-        document.querySelectorAll("[data-apr-tts-stop]").forEach(btn => {
-            btn.addEventListener("click", () => {
-                TTS.stop();
+         document.querySelectorAll("[data-apr-tts-stop]").forEach(btn => {
+        btn.addEventListener("click", function () {
+            window.APR_TTS.stop();
             });
+            
         });
 
     });
 
 })();
+
