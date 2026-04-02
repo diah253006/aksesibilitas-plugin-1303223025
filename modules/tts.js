@@ -22,28 +22,31 @@
             window.speechSynthesis.cancel();
         }
     };
-//detect global
+
+    // expose global (optional)
     window.APR_TTS = TTS;
-    // 🔥 AUTO DETECT BUTTON
-    document.addEventListener("DOMContentLoaded", () => {
 
-        // Cari semua elemen dengan atribut khusus
-        document.querySelectorAll("[data-apr-tts]").forEach(btn => {
-        btn.addEventListener("click", function () {
-            const target = this.getAttribute("data-target") || "body";
-            window.APR_TTS.start(target);
-            });
+    // 🔥 AUTO DETECT TANPA ATRIBUT
+    document.addEventListener("DOMContentLoaded", function () {
 
-        });
+        document.querySelectorAll("button").forEach(btn => {
+            const text = btn.innerText.toLowerCase();
 
-         document.querySelectorAll("[data-apr-tts-stop]").forEach(btn => {
-        btn.addEventListener("click", function () {
-            window.APR_TTS.stop();
-            });
-            
+            // START
+            if (text.includes("baca")) {
+                btn.addEventListener("click", () => {
+                    TTS.start("#mainContent");
+                });
+            }
+
+            // STOP
+            if (text.includes("stop")) {
+                btn.addEventListener("click", () => {
+                    TTS.stop();
+                });
+            }
         });
 
     });
 
 })();
-
