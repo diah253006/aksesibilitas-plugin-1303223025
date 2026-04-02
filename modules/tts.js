@@ -70,7 +70,8 @@
     // ========================
     if (text.includes("baca")) {
         console.log("Klik baca (auto)");
-        TTS.start("#mainContent");
+        const target = document.querySelector("#mainContent") ? "#mainContent" : "body";
+TTS.start(target);
     }
 
     if (text.includes("stop") || text.includes("berhenti")) {
