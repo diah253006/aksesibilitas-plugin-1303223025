@@ -43,7 +43,7 @@
 
     document.addEventListener("click", function (e) {
 
-        const btn = e.target.closest("button");
+        const btn = e.target.closest("button, [role='button'], .btn, a");
         if (!btn) return;
 
         const text = btn.innerText.toLowerCase();
