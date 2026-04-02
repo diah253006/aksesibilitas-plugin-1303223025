@@ -22,7 +22,8 @@
             window.speechSynthesis.cancel();
         }
     };
-
+//detect global
+    window.APR_TTS = TTS;
     // 🔥 AUTO DETECT BUTTON
     document.addEventListener("DOMContentLoaded", () => {
 
