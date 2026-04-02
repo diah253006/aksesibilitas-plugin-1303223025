@@ -7,15 +7,22 @@
             this.stop();
 
             const el = document.querySelector(target);
-            if (!el) return;
+            if (!el) {
+                console.warn("Target tidak ditemukan:", target);
+                return;
+            }
 
             const text = el.innerText.substring(0, 3000);
-            if (!text) return;
+            if (!text) {
+                console.warn("Tidak ada teks");
+                return;
+            }
 
             this.speech = new SpeechSynthesisUtterance(text);
             this.speech.lang = "id-ID";
 
             const speakNow = () => {
+                console.log("Mulai bicara...");
                 speechSynthesis.speak(this.speech);
             };
 
@@ -27,22 +34,26 @@
         },
 
         stop() {
+            console.log("Stop bicara");
             speechSynthesis.cancel();
         }
     };
 
     console.log("TTS READY");
 
-    // 🔥 SUPER STABIL (tidak tergantung DOM)
+    // 🔥 FIX: pakai closest
     document.addEventListener("click", function (e) {
 
-        if (e.target.matches("[data-apr-tts]")) {
+        const ttsBtn = e.target.closest("[data-apr-tts]");
+        const stopBtn = e.target.closest("[data-apr-tts-stop]");
+
+        if (ttsBtn) {
             console.log("Klik baca");
-            const target = e.target.getAttribute("data-target") || "body";
+            const target = ttsBtn.getAttribute("data-target") || "body";
             TTS.start(target);
         }
 
-        if (e.target.matches("[data-apr-tts-stop]")) {
+        if (stopBtn) {
             console.log("Klik stop");
             TTS.stop();
         }
