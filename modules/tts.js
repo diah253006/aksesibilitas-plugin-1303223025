@@ -50,7 +50,7 @@
     .toLowerCase()
     .replace(/[^\w\s]/gi, "") // hapus emoji & simbol
     .trim();
-
+    console.log("TEXT:", text);
         // PRIORITAS: ATRIBUT
         if (btn.matches("[data-apr-tts]")) {
             console.log("Klik baca (atribut)");
