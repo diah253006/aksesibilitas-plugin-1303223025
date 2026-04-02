@@ -6,45 +6,45 @@
         start(target = "body") {
             this.stop();
 
-            const element = document.querySelector(target);
-            if (!element) return;
+            const el = document.querySelector(target);
+            if (!el) return;
 
-            let text = element.innerText.trim().substring(0, 3000);
+            const text = el.innerText.substring(0, 3000);
             if (!text) return;
 
             this.speech = new SpeechSynthesisUtterance(text);
             this.speech.lang = "id-ID";
 
-            window.speechSynthesis.speak(this.speech);
+            const speakNow = () => {
+                speechSynthesis.speak(this.speech);
+            };
+
+            if (speechSynthesis.getVoices().length === 0) {
+                speechSynthesis.onvoiceschanged = speakNow;
+            } else {
+                speakNow();
+            }
         },
 
         stop() {
-            window.speechSynthesis.cancel();
+            speechSynthesis.cancel();
         }
     };
 
-    // expose global (optional)
-    window.APR_TTS = TTS;
+    // AUTO INIT
+    document.addEventListener("DOMContentLoaded", () => {
 
-    // 🔥 AUTO DETECT TANPA ATRIBUT
-    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll("[data-apr-tts]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const target = btn.getAttribute("data-target") || "body";
+                TTS.start(target);
+            });
+        });
 
-        document.querySelectorAll("button").forEach(btn => {
-            const text = btn.innerText.toLowerCase();
-
-            // START
-            if (text.includes("baca")) {
-                btn.addEventListener("click", () => {
-                    TTS.start("#mainContent");
-                });
-            }
-
-            // STOP
-            if (text.includes("stop")) {
-                btn.addEventListener("click", () => {
-                    TTS.stop();
-                });
-            }
+        document.querySelectorAll("[data-apr-tts-stop]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                TTS.stop();
+            });
         });
 
     });
