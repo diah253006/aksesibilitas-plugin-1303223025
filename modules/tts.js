@@ -41,44 +41,39 @@
 
     console.log("TTS READY");
 
-    // 🔥 FIX: pakai closest
-  document.addEventListener("click", function (e) {
+    document.addEventListener("click", function (e) {
 
-    const btn = e.target.closest("button");
-    if (!btn) return;
+        const btn = e.target.closest("button");
+        if (!btn) return;
 
-    const text = btn.innerText.toLowerCase();
+        const text = btn.innerText.toLowerCase();
 
-    // ========================
-    // 1. PRIORITAS: ATRIBUT
-    // ========================
-    if (btn.matches("[data-apr-tts]")) {
-        console.log("Klik baca (atribut)");
-        const target = btn.getAttribute("data-target") || "body";
-        TTS.start(target);
-        return;
-    }
+        // PRIORITAS: ATRIBUT
+        if (btn.matches("[data-apr-tts]")) {
+            console.log("Klik baca (atribut)");
+            const target = btn.getAttribute("data-target") || "body";
+            TTS.start(target);
+            return;
+        }
 
-    if (btn.matches("[data-apr-tts-stop]")) {
-        console.log("Klik stop (atribut)");
-        TTS.stop();
-        return;
-    }
+        if (btn.matches("[data-apr-tts-stop]")) {
+            console.log("Klik stop (atribut)");
+            TTS.stop();
+            return;
+        }
 
-    // ========================
-    // 2. FALLBACK: AUTO DETECT
-    // ========================
-    if (text.includes("baca")) {
-        console.log("Klik baca (auto)");
-        const target = document.querySelector("#mainContent") ? "#mainContent" : "body";
-TTS.start(target);
-    }
+        // AUTO DETECT (lebih aman)
+        if (text.includes("baca halaman")) {
+            console.log("Klik baca (auto)");
+            const target = document.querySelector("#mainContent") ? "#mainContent" : "body";
+            TTS.start(target);
+        }
 
-    if (text.includes("stop") || text.includes("berhenti")) {
-        console.log("Klik stop (auto)");
-        TTS.stop();
-    }
+        if (text.includes("stop") || text.includes("berhenti")) {
+            console.log("Klik stop (auto)");
+            TTS.stop();
+        }
 
-});
+    });
 
 })();
