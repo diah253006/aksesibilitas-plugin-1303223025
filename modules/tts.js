@@ -30,22 +30,22 @@
             speechSynthesis.cancel();
         }
     };
-console.log("TTS INIT");
-    // AUTO INIT
-    document.addEventListener("DOMContentLoaded", () => {
 
-        document.querySelectorAll("[data-apr-tts]").forEach(btn => {
-            btn.addEventListener("click", () => {
-                const target = btn.getAttribute("data-target") || "body";
-                TTS.start(target);
-            });
-        });
+    console.log("TTS READY");
 
-        document.querySelectorAll("[data-apr-tts-stop]").forEach(btn => {
-            btn.addEventListener("click", () => {
-                TTS.stop();
-            });
-        });
+    // 🔥 SUPER STABIL (tidak tergantung DOM)
+    document.addEventListener("click", function (e) {
+
+        if (e.target.matches("[data-apr-tts]")) {
+            console.log("Klik baca");
+            const target = e.target.getAttribute("data-target") || "body";
+            TTS.start(target);
+        }
+
+        if (e.target.matches("[data-apr-tts-stop]")) {
+            console.log("Klik stop");
+            TTS.stop();
+        }
 
     });
 
