@@ -46,7 +46,10 @@
         const btn = e.target.closest("button, [role='button'], .btn, a");
         if (!btn) return;
 
-        const text = btn.innerText.toLowerCase();
+        const text = btn.innerText
+    .toLowerCase()
+    .replace(/[^\w\s]/gi, "") // hapus emoji & simbol
+    .trim();
 
         // PRIORITAS: ATRIBUT
         if (btn.matches("[data-apr-tts]")) {
@@ -63,7 +66,7 @@
         }
 
         // AUTO DETECT (lebih aman)
-        if (text.includes("baca halaman")) {
+        if (text.includes("baca")) {
             console.log("Klik baca (auto)");
             const target = document.querySelector("#mainContent") ? "#mainContent" : "body";
             TTS.start(target);
