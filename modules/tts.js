@@ -42,22 +42,42 @@
     console.log("TTS READY");
 
     // 🔥 FIX: pakai closest
-    document.addEventListener("click", function (e) {
+  document.addEventListener("click", function (e) {
 
-        const ttsBtn = e.target.closest("[data-apr-tts]");
-        const stopBtn = e.target.closest("[data-apr-tts-stop]");
+    const btn = e.target.closest("button");
+    if (!btn) return;
 
-        if (ttsBtn) {
-            console.log("Klik baca");
-            const target = ttsBtn.getAttribute("data-target") || "body";
-            TTS.start(target);
-        }
+    const text = btn.innerText.toLowerCase();
 
-        if (stopBtn) {
-            console.log("Klik stop");
-            TTS.stop();
-        }
+    // ========================
+    // 1. PRIORITAS: ATRIBUT
+    // ========================
+    if (btn.matches("[data-apr-tts]")) {
+        console.log("Klik baca (atribut)");
+        const target = btn.getAttribute("data-target") || "body";
+        TTS.start(target);
+        return;
+    }
 
-    });
+    if (btn.matches("[data-apr-tts-stop]")) {
+        console.log("Klik stop (atribut)");
+        TTS.stop();
+        return;
+    }
+
+    // ========================
+    // 2. FALLBACK: AUTO DETECT
+    // ========================
+    if (text.includes("baca")) {
+        console.log("Klik baca (auto)");
+        TTS.start("#mainContent");
+    }
+
+    if (text.includes("stop") || text.includes("berhenti")) {
+        console.log("Klik stop (auto)");
+        TTS.stop();
+    }
+
+});
 
 })();
