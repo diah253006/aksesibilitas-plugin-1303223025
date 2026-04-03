@@ -1,30 +1,39 @@
 (function () {
 
     let active = false;
-    let lens = null;
+    let lens, zoomed;
 
     const MAGNIFIER = {
 
         init() {
-            // buat lens otomatis
+            // lens
             lens = document.createElement("div");
-            lens.id = "apr-magnifier-lens";
+            lens.id = "apr-magnifier";
 
             Object.assign(lens.style, {
                 position: "fixed",
                 width: "150px",
                 height: "150px",
                 borderRadius: "50%",
-                border: "2px solid #000",
+                border: "3px solid black",
                 overflow: "hidden",
                 pointerEvents: "none",
                 display: "none",
-                zIndex: "9999",
-                transform: "scale(2)",
-                transformOrigin: "top left",
-                background: "#fff"
+                zIndex: "9999"
             });
 
+            // zoom content
+            zoomed = document.createElement("div");
+
+            Object.assign(zoomed.style, {
+                position: "absolute",
+                transform: "scale(2)",
+                transformOrigin: "top left"
+            });
+
+            zoomed.innerHTML = document.body.innerHTML;
+
+            lens.appendChild(zoomed);
             document.body.appendChild(lens);
         },
 
@@ -34,11 +43,9 @@
             if (active) {
                 lens.style.display = "block";
                 document.addEventListener("mousemove", this.move);
-                console.log("Magnifier ON");
             } else {
                 lens.style.display = "none";
                 document.removeEventListener("mousemove", this.move);
-                console.log("Magnifier OFF");
             }
         },
 
@@ -49,49 +56,26 @@
             lens.style.left = (x - 75) + "px";
             lens.style.top = (y - 75) + "px";
 
-            // 🔥 TRICK: zoom pakai CSS, bukan clone DOM
-            lens.style.backgroundImage = `url(${MAGNIFIER.capture()})`;
-            lens.style.backgroundRepeat = "no-repeat";
-            lens.style.backgroundSize = `${window.innerWidth * 2}px ${window.innerHeight * 2}px`;
-            lens.style.backgroundPosition = `-${x * 2 - 75}px -${y * 2 - 75}px`;
-        },
-
-        // ambil screenshot halaman (simple hack)
-        capture() {
-            return window.location.href;
+            zoomed.style.left = (-x * 2 + 75) + "px";
+            zoomed.style.top = (-y * 2 + 75) + "px";
         }
 
     };
 
-    // 🔥 INIT AUTO
     document.addEventListener("DOMContentLoaded", () => {
         MAGNIFIER.init();
     });
 
-    // 🔥 EXPORT GLOBAL
     window.APR_MAGNIFIER = MAGNIFIER;
 
-    console.log("MAGNIFIER READY");
-
-    // 🔥 AUTO BUTTON DETECT
     document.addEventListener("click", function (e) {
-
         const btn = e.target.closest("button");
+
         if (!btn) return;
 
-        // PRIORITAS: ATRIBUT
         if (btn.hasAttribute("data-apr-magnifier")) {
             MAGNIFIER.toggle();
-            return;
         }
-
-        // 🔥 FALLBACK AUTO TEXT
-        const text = (btn.innerText || "").toLowerCase();
-
-        if (text.includes("magnifier") || text.includes("zoom kaca")) {
-            MAGNIFIER.toggle();
-        }
-
     });
 
 })();
