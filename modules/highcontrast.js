@@ -14,7 +14,7 @@
 
             console.log("Contrast:", isHighContrast ? "ON" : "OFF");
 
-            // 🔊 Optional voice feedback
+            // 🔊 voice feedback
             if (window.speechSynthesis) {
                 const msg = new SpeechSynthesisUtterance(
                     isHighContrast
@@ -28,26 +28,41 @@
 
     };
 
-    // GLOBAL
     window.APR_CONTRAST = Contrast;
 
     console.log("CONTRAST READY");
 
-    // AUTO DETECT CLICK
     document.addEventListener("click", function (e) {
 
-        const btn = e.target.closest("[data-apr-contrast]");
+        const btn = e.target.closest("button");
         if (!btn) return;
 
-        const target = btn.getAttribute("data-target") || "body";
+        // ========================
+        // 1. PRIORITAS: ATRIBUT
+        // ========================
+        if (btn.hasAttribute("data-apr-contrast")) {
+            console.log("Klik contrast (atribut)");
 
-        Contrast.toggle(target);
+            const target = btn.getAttribute("data-target") || "body";
+            Contrast.toggle(target);
 
-        // 🔄 Auto change text tombol
-        if (btn.hasAttribute("data-apr-auto-text")) {
-            btn.innerText = isHighContrast
-                ? "🌗 Normal Mode"
-                : "🌓 High Contrast";
+            if (btn.hasAttribute("data-apr-auto-text")) {
+                btn.innerText = isHighContrast
+                    ? "🌗 Normal Mode"
+                    : "🌓 High Contrast";
+            }
+
+            return;
+        }
+
+        // ========================
+        // 2. FALLBACK: TEXT
+        // ========================
+        const text = (btn.innerText || "").toLowerCase();
+
+        if (text.includes("contrast") || text.includes("kontras")) {
+            console.log("Klik contrast (auto)");
+            Contrast.toggle("body");
         }
 
     });
