@@ -1,80 +1,65 @@
 (function () {
 
-    const Spacing = {
+    const ALIGN = {
 
-        setLine(value, target = "#mainContent") {
+        set(type, target = "#mainContent") {
             const el = document.querySelector(target);
-            if (!el) return;
 
-            el.style.lineHeight = value;
-        },
+            if (!el) {
+                console.warn("Target tidak ditemukan:", target);
+                return;
+            }
 
-        setLetter(value, target = "#mainContent") {
-            const el = document.querySelector(target);
-            if (!el) return;
-
-            el.style.letterSpacing = value + "px";
-        },
-
-        setWord(value, target = "#mainContent") {
-            const el = document.querySelector(target);
-            if (!el) return;
-
-            el.style.wordSpacing = value + "px";
-        },
-
-        reset(target = "#mainContent") {
-            const el = document.querySelector(target);
-            if (!el) return;
-
-            el.style.lineHeight = "1.5";
-            el.style.letterSpacing = "0px";
-            el.style.wordSpacing = "0px";
+            el.style.textAlign = type;
+            console.log("Align:", type);
         }
 
     };
 
-    // GLOBAL
-    window.APR_SPACING = Spacing;
+    // EXPORT GLOBAL (optional)
+    window.APR_ALIGN = ALIGN;
 
-    console.log("SPACING READY");
+    console.log("ALIGN READY");
 
-    // AUTO DETECT
-    document.addEventListener("input", function (e) {
+    // 🔥 AUTO DETECT BUTTON
+    document.addEventListener("click", function (e) {
 
-document.addEventListener("click", function (e) {
+        const btn = e.target.closest("button");
+        if (!btn) return;
 
-    const btn = e.target.closest("button");
-    if (!btn) return;
+        // ========================
+        // 1. PRIORITAS: ATRIBUT
+        // ========================
+        if (btn.hasAttribute("data-apr-align")) {
 
-    // LINE
-    if (btn.hasAttribute("data-apr-line")) {
-        const value = btn.getAttribute("data-apr-line");
-        const target = btn.getAttribute("data-target") || "#mainContent";
-        Spacing.setLine(value, target);
-    }
+            const type = btn.getAttribute("data-apr-align");
+            const target = btn.getAttribute("data-target") || "#mainContent";
 
-    // LETTER
-    if (btn.hasAttribute("data-apr-letter")) {
-        const value = btn.getAttribute("data-apr-letter");
-        const target = btn.getAttribute("data-target") || "#mainContent";
-        Spacing.setLetter(value, target);
-    }
+            ALIGN.set(type, target);
+            return;
+        }
 
-    // WORD
-    if (btn.hasAttribute("data-apr-word")) {
-        const value = btn.getAttribute("data-apr-word");
-        const target = btn.getAttribute("data-target") || "#mainContent";
-        Spacing.setWord(value, target);
-    }
+        // ========================
+        // 2. FALLBACK AUTO TEXT
+        // ========================
+        const text = (btn.innerText || "").toLowerCase();
 
-    // RESET
-    if (btn.hasAttribute("data-apr-spacing-reset")) {
-        const target = btn.getAttribute("data-target") || "#mainContent";
-        Spacing.reset(target);
-    }
+        if (text.includes("left")) {
+            ALIGN.set("left");
+        }
 
-        });
+        if (text.includes("center")) {
+            ALIGN.set("center");
+        }
+
+        if (text.includes("right")) {
+            ALIGN.set("right");
+        }
+
+        if (text.includes("justify")) {
+            ALIGN.set("justify");
+        }
+
     });
 
 })();
