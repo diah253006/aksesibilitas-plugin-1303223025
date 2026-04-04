@@ -42,32 +42,39 @@
     // AUTO DETECT
     document.addEventListener("input", function (e) {
 
-        const el = e.target;
+document.addEventListener("click", function (e) {
 
-        if (el.matches("[data-apr-line]")) {
-            const target = el.getAttribute("data-target") || "#mainContent";
-            Spacing.setLine(el.value, target);
-        }
+    const btn = e.target.closest("button");
+    if (!btn) return;
 
-        if (el.matches("[data-apr-letter]")) {
-            const target = el.getAttribute("data-target") || "#mainContent";
-            Spacing.setLetter(el.value, target);
-        }
+    // LINE
+    if (btn.hasAttribute("data-apr-line")) {
+        const value = btn.getAttribute("data-apr-line");
+        const target = btn.getAttribute("data-target") || "#mainContent";
+        Spacing.setLine(value, target);
+    }
 
-        if (el.matches("[data-apr-word]")) {
-            const target = el.getAttribute("data-target") || "#mainContent";
-            Spacing.setWord(el.value, target);
-        }
+    // LETTER
+    if (btn.hasAttribute("data-apr-letter")) {
+        const value = btn.getAttribute("data-apr-letter");
+        const target = btn.getAttribute("data-target") || "#mainContent";
+        Spacing.setLetter(value, target);
+    }
 
-    });
+    // WORD
+    if (btn.hasAttribute("data-apr-word")) {
+        const value = btn.getAttribute("data-apr-word");
+        const target = btn.getAttribute("data-target") || "#mainContent";
+        Spacing.setWord(value, target);
+    }
 
-    document.addEventListener("click", function (e) {
+    // RESET
+    if (btn.hasAttribute("data-apr-spacing-reset")) {
+        const target = btn.getAttribute("data-target") || "#mainContent";
+        Spacing.reset(target);
+    }
 
-        if (e.target.matches("[data-apr-spacing-reset]")) {
-            const target = e.target.getAttribute("data-target") || "#mainContent";
-            Spacing.reset(target);
-        }
-
+        });
     });
 
 })();
