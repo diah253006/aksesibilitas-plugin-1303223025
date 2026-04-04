@@ -1,65 +1,80 @@
 (function () {
 
-    const ALIGN = {
+    const Spacing = {
 
-        set(type, target = "#mainContent") {
+        setLine(value, target = "#mainContent") {
             const el = document.querySelector(target);
+            if (!el) return;
 
-            if (!el) {
-                console.warn("Target tidak ditemukan:", target);
-                return;
-            }
+            el.style.lineHeight = value;
+        },
 
-            el.style.textAlign = type;
-            console.log("Align:", type);
+        setLetter(value, target = "#mainContent") {
+            const el = document.querySelector(target);
+            if (!el) return;
+
+            el.style.letterSpacing = value + "px";
+        },
+
+        setWord(value, target = "#mainContent") {
+            const el = document.querySelector(target);
+            if (!el) return;
+
+            el.style.wordSpacing = value + "px";
+        },
+
+        reset(target = "#mainContent") {
+            const el = document.querySelector(target);
+            if (!el) return;
+
+            el.style.lineHeight = "1.5";
+            el.style.letterSpacing = "0px";
+            el.style.wordSpacing = "0px";
         }
 
     };
 
-    // EXPORT GLOBAL (optional)
-    window.APR_ALIGN = ALIGN;
+    // GLOBAL
+    window.APR_SPACING = Spacing;
 
-    console.log("ALIGN READY");
+    console.log("SPACING READY");
 
-    // 🔥 AUTO DETECT BUTTON
-    document.addEventListener("click", function (e) {
+    // AUTO DETECT
+    document.addEventListener("input", function (e) {
 
-        const btn = e.target.closest("button");
-        if (!btn) return;
+document.addEventListener("click", function (e) {
 
-        // ========================
-        // 1. PRIORITAS: ATRIBUT
-        // ========================
-        if (btn.hasAttribute("data-apr-align")) {
+    const btn = e.target.closest("button");
+    if (!btn) return;
 
-            const type = btn.getAttribute("data-apr-align");
-            const target = btn.getAttribute("data-target") || "#mainContent";
+    // LINE
+    if (btn.hasAttribute("data-apr-line")) {
+        const value = btn.getAttribute("data-apr-line");
+        const target = btn.getAttribute("data-target") || "#mainContent";
+        Spacing.setLine(value, target);
+    }
 
-            ALIGN.set(type, target);
-            return;
-        }
+    // LETTER
+    if (btn.hasAttribute("data-apr-letter")) {
+        const value = btn.getAttribute("data-apr-letter");
+        const target = btn.getAttribute("data-target") || "#mainContent";
+        Spacing.setLetter(value, target);
+    }
 
-        // ========================
-        // 2. FALLBACK AUTO TEXT
-        // ========================
-        const text = (btn.innerText || "").toLowerCase();
+    // WORD
+    if (btn.hasAttribute("data-apr-word")) {
+        const value = btn.getAttribute("data-apr-word");
+        const target = btn.getAttribute("data-target") || "#mainContent";
+        Spacing.setWord(value, target);
+    }
 
-        if (text.includes("left")) {
-            ALIGN.set("left");
-        }
+    // RESET
+    if (btn.hasAttribute("data-apr-spacing-reset")) {
+        const target = btn.getAttribute("data-target") || "#mainContent";
+        Spacing.reset(target);
+    }
 
-        if (text.includes("center")) {
-            ALIGN.set("center");
-        }
-
-        if (text.includes("right")) {
-            ALIGN.set("right");
-        }
-
-        if (text.includes("justify")) {
-            ALIGN.set("justify");
-        }
-
+        });
     });
 
 })();
