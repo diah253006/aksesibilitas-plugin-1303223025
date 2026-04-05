@@ -7,7 +7,8 @@
         toggle() {
             const panel = document.getElementById("accessibilityPanel");
             if (!panel) return;
-
+                const isToggleBtn = e.target.closest("[data-apr-panel-toggle]");
+                const isInsidePanel = panel.contains(e.target);
             panel.classList.toggle("hide");
         },
 
@@ -42,6 +43,7 @@
         // ATRIBUT MODE (UTAMA)
         // ========================
         if (btn.hasAttribute("data-apr-panel-toggle")) {
+            e.stopPropagation();
             PANEL.toggle();
             return;
         }
