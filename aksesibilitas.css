@@ -13,6 +13,8 @@
 
 .apr-1303223025-hide {
     transform: translateY(-50%) translateX(100%);
+     opacity: 0;
+    pointer-events: none;
 }
 
 /* TAB */
