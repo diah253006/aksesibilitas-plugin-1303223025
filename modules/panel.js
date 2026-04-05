@@ -7,8 +7,7 @@
         toggle() {
             const panel = document.getElementById("accessibilityPanel");
             if (!panel) return;
-                const isToggleBtn = e.target.closest("[data-apr-panel-toggle]");
-                const isInsidePanel = panel.contains(e.target);
+                console.log("Toggle Panel");
             panel.classList.toggle("hide");
         },
 
