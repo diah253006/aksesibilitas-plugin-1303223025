@@ -1,72 +1,3 @@
-/*(function () {
-
-    const TTS = {
-        speech: null,
-
-        start(target = "body") {
-            this.stop();
-
-            const element = document.querySelector(target);
-            if (!element) {
-                console.warn("TTS: target tidak ditemukan");
-                return;
-            }
-
-            let text = element.innerText.trim().substring(0, 3000);
-
-            if (!text) {
-                alert("Tidak ada teks untuk dibaca");
-                return;
-            }
-
-            this.speech = new SpeechSynthesisUtterance(text);
-
-            this.speech.lang = "id-ID";
-            this.speech.rate = 1;
-            this.speech.pitch = 1;
-
-            this.setVoice(() => {
-                window.speechSynthesis.speak(this.speech);
-            });
-        },
-
-        stop() {
-            window.speechSynthesis.cancel();
-        },
-
-        pause() {
-            window.speechSynthesis.pause();
-        },
-
-        resume() {
-            window.speechSynthesis.resume();
-        },
-
-        setVoice(callback) {
-            const voices = speechSynthesis.getVoices();
-
-            const indoVoice = voices.find(v =>
-                v.lang.toLowerCase().includes("id")
-            );
-
-            if (indoVoice) {
-                this.speech.voice = indoVoice;
-            }
-
-            if (voices.length === 0) {
-                speechSynthesis.onvoiceschanged = () => callback();
-            } else {
-                callback();
-            }
-        }
-    };
-
-    // EXPORT GLOBAL
-    window.APR_TTS = TTS;
-
-})();
-
-*/
 (function () {
 
     const TTS = {
@@ -76,15 +7,22 @@
             this.stop();
 
             const el = document.querySelector(target);
-            if (!el) return;
+            if (!el) {
+                console.warn("Target tidak ditemukan:", target);
+                return;
+            }
 
             const text = el.innerText.substring(0, 3000);
-            if (!text) return;
+            if (!text) {
+                console.warn("Tidak ada teks");
+                return;
+            }
 
             this.speech = new SpeechSynthesisUtterance(text);
             this.speech.lang = "id-ID";
 
             const speakNow = () => {
+                console.log("Mulai bicara...");
                 speechSynthesis.speak(this.speech);
             };
 
@@ -96,26 +34,53 @@
         },
 
         stop() {
+            console.log("Stop bicara");
             speechSynthesis.cancel();
         }
     };
 
     console.log("TTS READY");
 
-    // 🔥 SUPER STABIL (tidak tergantung DOM)
-    document.addEventListener("click", function (e) {
+   document.addEventListener("click", function (e) {
 
-        if (e.target.matches("[data-apr-tts]")) {
-            console.log("Klik baca");
-            const target = e.target.getAttribute("data-target") || "body";
-            TTS.start(target);
-        }
+    const btn = e.target.closest("button");
+    if (!btn) return;
 
-        if (e.target.matches("[data-apr-tts-stop]")) {
-            console.log("Klik stop");
-            TTS.stop();
-        }
+    const text = btn.innerText
+    .toLowerCase()
+    .replace(/[^\w\s]/gi, "") // hapus emoji & simbol
+    .trim();
 
-    });
+    // ========================
+    // 1. PRIORITAS: ATRIBUT
+    // ========================
+    if (btn.matches("[data-apr-tts]")) {
+        console.log("Klik baca (atribut)");
+        const target = btn.getAttribute("data-target") || "body";
+        TTS.start(target);
+        return;
+    }
+
+    if (btn.matches("[data-apr-tts-stop]")) {
+        console.log("Klik stop (atribut)");
+        TTS.stop();
+        return;
+    }
+
+    // ========================
+    // 2. FALLBACK: AUTO DETECT
+    // ========================
+    if (text.includes("baca")) {
+        console.log("Klik baca (auto)");
+        const target = document.querySelector("#mainContent") ? "#mainContent" : "body";
+TTS.start(target);
+    }
+
+    if (text.includes("stop") || text.includes("berhenti")) {
+        console.log("Klik stop (auto)");
+        TTS.stop();
+    }
+
+});
 
 })();
