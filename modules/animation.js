@@ -56,4 +56,8 @@
         isPaused = true;
     }
 
+<<<<<<< HEAD
 })();
+=======
+})();
+>>>>>>> 18d0129eb52c5d0ebf913f6bcbba1bbe41c0f70c

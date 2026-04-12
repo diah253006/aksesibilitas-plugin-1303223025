@@ -5,6 +5,7 @@
     const PANEL = {
         toggle() {
             const panel = document.getElementById("accessibilityPanel");
+<<<<<<< HEAD
         const tab = document.getElementById("accessibilityTab");
             
         console.log("TAB:", tab);
@@ -12,6 +13,14 @@
 
         panel.classList.toggle("hide");
         tab.classList.toggle("hide");
+=======
+            const tab = document.getElementById("accessibilityTab");
+
+            if (!panel || !tab) return;
+
+            panel.classList.toggle("hide");
+            tab.classList.toggle("hide");
+>>>>>>> 18d0129eb52c5d0ebf913f6bcbba1bbe41c0f70c
         },
 
         fontIncrease() {
@@ -32,8 +41,13 @@
     window.APR_PANEL = PANEL;
 
     document.addEventListener("click", function (e) {
+<<<<<<< HEAD
         const toggleBtn = e.target.closest("#accessibilityTab, [data-apr-panel-toggle]");
         if (toggleBtn) {
+=======
+
+        if (e.target.closest("[data-apr-panel-toggle]")) {
+>>>>>>> 18d0129eb52c5d0ebf913f6bcbba1bbe41c0f70c
             PANEL.toggle();
             return;
         }
@@ -54,4 +68,8 @@
         }
     });
 
+<<<<<<< HEAD
 })();
+=======
+})();
+>>>>>>> 18d0129eb52c5d0ebf913f6bcbba1bbe41c0f70c

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* PANEL */
 .apr-1303223025-panel {
     position: fixed;
@@ -39,3 +40,46 @@
 .apr-1303223025-font-dyslexic {
     font-family: 'OpenDyslexic', Arial, sans-serif;
 }
+=======
+/* PANEL */
+.apr-1303223025-panel {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    padding: 15px;
+    width: 200px;
+    z-index: 9999;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+}
+
+.apr-1303223025-hide {
+    transform: translateY(-50%) translateX(100%);
+     opacity: 0;
+    pointer-events: none;
+}
+
+/* TAB */
+.apr-1303223025-tab {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    background: black;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 9998;
+}
+
+/* HIGH CONTRAST */
+.apr-1303223025-contrast {
+    background: black !important;
+    color: white !important;
+}
+
+/* FONT */
+.apr-1303223025-font-dyslexic {
+    font-family: 'OpenDyslexic', Arial, sans-serif;
+}
+>>>>>>> 18d0129eb52c5d0ebf913f6bcbba1bbe41c0f70c
