@@ -1,4 +1,18 @@
-(function () {
+// =============================
+// HAPUS USERWAY (PALING ATAS)
+// =============================
+function removeUserWay() {
+    document.querySelectorAll(".uwy, .uwif").forEach(el => el.remove());
+}
+
+// langsung jalan
+removeUserWay();
+
+// ulangi (karena UserWay inject async)
+setTimeout(removeUserWay, 1000);
+setTimeout(removeUserWay, 3000);
+
+
 
     console.log("ACCESSIBILITY PLUGIN INIT");
 
@@ -93,6 +107,12 @@
 
         document.body.appendChild(tab);
     }
+    document.addEventListener("click", function (e) {
+    if (e.target.closest("[data-apr-panel-toggle]")) {
+        const panel = document.getElementById("accessibilityPanel");
+        if (panel) panel.classList.toggle("hide");
+    }
+});
 
     // =============================
     // 4. INIT SAAT DOM READY
@@ -102,5 +122,12 @@
     } else {
         injectPanel();
     }
+    window.A11Y = {
+    toggle: () => { 
+        const panel = document.getElementById("accessibilityPanel");
+        if (!panel) return;
+        panel.classList.toggle("hide");
+    }
+};
 
 })();
