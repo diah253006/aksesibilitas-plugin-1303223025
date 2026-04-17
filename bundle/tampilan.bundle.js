@@ -41,6 +41,7 @@
         // PRIORITAS: ATRIBUT
         // ========================
         if (btn.hasAttribute("data-apr-images")) {
+                console.log("CLICK IMAGE BUTTON"); 
             const target = btn.getAttribute("data-target") || "body";
             Images.toggle(target);
             return;
