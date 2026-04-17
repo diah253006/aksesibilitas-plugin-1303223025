@@ -491,23 +491,27 @@ TTS.start(target);
             }
         },
 
-        move(e) {
-            const x = e.clientX;
+       move(e) {
+    const x = e.clientX;
     const y = e.clientY;
 
     lens.style.left = (x - 75) + "px";
     lens.style.top = (y - 75) + "px";
 
-    const zoom = 2;
+    // ambil element di bawah cursor
+    const element = document.elementFromPoint(x, y);
+    if (!element || element === lens) return;
 
-    lens.style.background = "transparent";
-    lens.style.backdropFilter = `zoom(${zoom})`;
-        },
+    const rect = element.getBoundingClientRect();
 
-        // ambil screenshot halaman (simple hack)
-        capture() {
-            return window.location.href;
-        }
+    lens.innerHTML = element.outerHTML;
+
+    const inner = lens.firstChild;
+
+    inner.style.transform = "scale(2)";
+    inner.style.transformOrigin = `${x - rect.left}px ${y - rect.top}px`;
+    inner.style.pointerEvents = "none";
+}
 
     };
 
