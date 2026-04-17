@@ -1,5 +1,5 @@
 /* PANEL */
-.apr-1303223025-panel {
+/*.apr-1303223025-panel {
     position: fixed;
     right: 0;
     top: 50%;
@@ -9,16 +9,36 @@
     width: 200px;
     z-index: 9999;
     box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+}*/
+.apr-1303223025-panel {
+    position: fixed;
+    right: 60px; /* sedikit ke kiri dari tab */
+    top: 50%;
+    transform: translateY(-50%);
+    
+    width: 260px;
+    max-height: 80vh;
+    overflow-y: auto;
+
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    z-index: 999999 !important;
+  
 }
 
 .apr-1303223025-hide {
     transform: translateY(-50%) translateX(100%);
      opacity: 0;
     pointer-events: none;
+    display: none;
 }
 
+
 /* TAB */
-.apr-1303223025-tab {
+/*.apr-1303223025-tab {
     position: fixed;
     right: 0;
     top: 50%;
@@ -27,6 +47,21 @@
     padding: 10px;
     cursor: pointer;
     z-index: 9998;
+}*/
+.apr-1303223025-tab {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    background: #007bff;
+    color: white;
+    padding: 12px 14px;
+    border-radius: 8px 0 0 8px;
+    cursor: pointer;
+    z-index: 999999 !important;
+
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
 /* HIGH CONTRAST */
