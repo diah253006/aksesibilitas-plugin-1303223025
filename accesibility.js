@@ -1,31 +1,50 @@
 // =============================
-// HAPUS USERWAY (PALING ATAS)
+// REMOVE USERWAY (SAFE & RINGAN)
 // =============================
 function removeUserWay() {
     document.querySelectorAll(".uwy, .uwif").forEach(el => el.remove());
 }
 
-// langsung jalan
+// jalankan awal
 removeUserWay();
 
-// ulangi (karena UserWay inject async)
+// retry async
 setTimeout(removeUserWay, 1000);
 setTimeout(removeUserWay, 3000);
 
+// observer ringan
+const observer = new MutationObserver(() => {
+    if (document.querySelector(".uwy, .uwif")) {
+        removeUserWay();
+    }
+});
 
+observer.observe(document.body, {
+    childList: true,
+    subtree: true
+});
+
+
+// =============================
+// PLUGIN START
+// =============================
+(function () {
 
     console.log("ACCESSIBILITY PLUGIN INIT");
 
     // =============================
-    // 1. LOAD CSS (AUTO)
+    // LOAD CSS
     // =============================
-    const css = document.createElement("link");
-    css.rel = "stylesheet";
-    css.href = "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025/aksesibilitas.css";
-    document.head.appendChild(css);
+    if (!document.getElementById("apr-css")) {
+        const css = document.createElement("link");
+        css.id = "apr-css";
+        css.rel = "stylesheet";
+        css.href = "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025/aksesibilitas.css";
+        document.head.appendChild(css);
+    }
 
     // =============================
-    // 2. LOAD BUNDLE JS (AUTO)
+    // LOAD JS BUNDLE
     // =============================
     const scripts = [
         "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/tampilan.bundle.js",
@@ -34,14 +53,18 @@ setTimeout(removeUserWay, 3000);
     ];
 
     scripts.forEach(src => {
+        if (document.querySelector(`script[src="${src}"]`)) return;
+
         const s = document.createElement("script");
         s.src = src;
         s.defer = true;
-        document.body.appendChild(s);
+        s.onerror = () => console.warn("Gagal load:", src);
+
+        (document.body || document.head).appendChild(s);
     });
 
     // =============================
-    // 3. INJECT HTML PANEL
+    // PANEL UI
     // =============================
     function injectPanel() {
 
@@ -55,79 +78,127 @@ setTimeout(removeUserWay, 3000);
             <button data-apr-panel-toggle>✖</button>
             <h5>Aksesibilitas</h5>
 
-            <label>Tampilan</label>
-            <button data-apr-images>🖼️ Gambar</button>
-            <button data-apr-contrast>🌗 Contrast</button>
-            <button data-apr-animation>⏸ Animasi</button>
-            <button data-apr-mono>⚫ Mono</button>
-            <button data-apr-cursor>🖱️ Cursor</button>
-
-            <label>Teks</label>
-            <button data-apr-font-increase>+</button>
-            <button data-apr-font-decrease>-</button>
-            <button data-apr-font="default">Default</button>
-            <button data-apr-font="sans">Sans</button>
-            <button data-apr-font="serif">Serif</button>
-            <button data-apr-font="dyslexic">Dyslexic</button>
-
-            <label>Spacing</label>
-            <button data-apr-line="1">1x</button>
-            <button data-apr-line="1.5">1.5x</button>
-            <button data-apr-line="2">2x</button>
-
-            <button data-apr-letter="0">Normal</button>
-            <button data-apr-letter="2">Lebar</button>
-
-            <button data-apr-spacing-reset>Reset</button>
-
-            <label>Akses</label>
-            <button data-apr-tts>🔊 Baca</button>
-            <button data-apr-tts-stop>Stop</button>
-            <button data-apr-voice>🎤 Voice</button>
-            <button data-apr-voice-stop>Stop Voice</button>
-
-            <button data-apr-zoom-in>Zoom +</button>
-            <button data-apr-zoom-out>Zoom -</button>
-            <button data-apr-zoom-reset>Reset Zoom</button>
-
-            <button data-apr-magnifier>Magnifier</button>
+            <button data-apr-magnifier>🔍 Magnifier</button>
         `;
 
         document.body.appendChild(panel);
 
-        // =============================
-        // TAB
-        // =============================
         const tab = document.createElement("div");
         tab.id = "accessibilityTab";
         tab.className = "accessibility-tab";
         tab.setAttribute("data-apr-panel-toggle", "");
-
         tab.innerHTML = `♿`;
 
         document.body.appendChild(tab);
     }
-    document.addEventListener("click", function (e) {
-    if (e.target.closest("[data-apr-panel-toggle]")) {
-        const panel = document.getElementById("accessibilityPanel");
-        if (panel) panel.classList.toggle("hide");
-    }
-});
 
     // =============================
-    // 4. INIT SAAT DOM READY
+    // TOGGLE PANEL
+    // =============================
+    document.addEventListener("click", function (e) {
+        const toggle = e.target.closest("[data-apr-panel-toggle]");
+        if (!toggle) return;
+
+        const panel = document.getElementById("accessibilityPanel");
+        if (panel) panel.classList.toggle("hide");
+    });
+
+    // =============================
+    // MAGNIFIER (OPTIMIZED)
+    // =============================
+    let active = false;
+    let lens = null;
+
+    function createLens() {
+        if (document.getElementById("apr-lens")) return;
+
+        lens = document.createElement("div");
+        lens.id = "apr-lens";
+
+        Object.assign(lens.style, {
+            position: "fixed",
+            width: "140px",
+            height: "140px",
+            borderRadius: "50%",
+            border: "2px solid black",
+            overflow: "hidden",
+            pointerEvents: "none",
+            zIndex: "99999",
+            display: "none",
+            background: "white"
+        });
+
+        document.body.appendChild(lens);
+    }
+
+    function moveLens(e) {
+        if (!active || !lens) return;
+
+        const zoom = 2;
+        const x = e.clientX;
+        const y = e.clientY;
+
+        lens.style.display = "block";
+        lens.style.left = (x - 70) + "px";
+        lens.style.top = (y - 70) + "px";
+
+        const el = document.elementFromPoint(x, y);
+        if (!el) return;
+
+        // hindari element besar
+        if (el === document.body || el === document.documentElement) return;
+
+        const rect = el.getBoundingClientRect();
+
+        lens.innerHTML = "";
+
+        const clone = el.cloneNode(true);
+        clone.style.transform = `scale(${zoom})`;
+        clone.style.transformOrigin = "top left";
+        clone.style.pointerEvents = "none";
+
+        lens.appendChild(clone);
+
+        clone.style.marginLeft = -(x - rect.left) * zoom + 70 + "px";
+        clone.style.marginTop = -(y - rect.top) * zoom + 70 + "px";
+    }
+
+    function enableMagnifier() {
+        active = true;
+        document.addEventListener("mousemove", moveLens);
+    }
+
+    function disableMagnifier() {
+        active = false;
+        if (lens) lens.style.display = "none";
+        document.removeEventListener("mousemove", moveLens);
+    }
+
+    createLens();
+
+    document.addEventListener("click", function (e) {
+        if (e.target.closest("[data-apr-magnifier]")) {
+            active ? disableMagnifier() : enableMagnifier();
+        }
+    });
+
+    // =============================
+    // INIT
     // =============================
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", injectPanel);
     } else {
         injectPanel();
     }
+
+    // =============================
+    // GLOBAL API
+    // =============================
     window.A11Y = {
-    toggle: () => { 
-        const panel = document.getElementById("accessibilityPanel");
-        if (!panel) return;
-        panel.classList.toggle("hide");
-    }
-};
+        toggle: () => {
+            const panel = document.getElementById("accessibilityPanel");
+            if (panel) panel.classList.toggle("hide");
+        }
+    };
 
 })();
