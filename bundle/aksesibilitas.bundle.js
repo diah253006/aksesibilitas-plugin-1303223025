@@ -92,8 +92,8 @@
 
     const PANEL = {
         toggle() {
-            const panel = document.getElementById("accessibilityPanel");
-        const tab = document.getElementById("accessibilityTab");
+            const panel = document.getElementById("apr-1303223025-panel");
+        const tab = document.getElementById("apr-1303223025-tab");
             
         console.log("TAB:", tab);
         if (!panel || !tab) return;
