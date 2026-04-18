@@ -393,7 +393,7 @@ TTS.start(target);
         },
 
         apply() {
-            document.body.style.transform = `scale(${zoomLevel})`;
+            document.documentElement.style.zoom = zoom;
             document.body.style.transformOrigin = "top left";
             document.body.style.width = (100 / zoomLevel) + "%";
         }
