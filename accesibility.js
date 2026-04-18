@@ -61,6 +61,23 @@
         tab.setAttribute("data-apr-toggle", "");
         tab.innerHTML = "♿";
 
+        // 🔥 fallback style supaya selalu terlihat
+        Object.assign(tab.style, {
+          position: "fixed",
+          right: "0",
+          top: "50%",
+          transform: "translateY(-50%)",
+          width: "60px",
+          height: "60px",
+          background: "#2d5bff",
+          color: "#fff",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "28px",
+          zIndex: "9999999",
+          cursor: "pointer"
+        });
         document.body.appendChild(tab);
     }
 
@@ -76,7 +93,7 @@
         document.body.appendChild(s);
     }
 
-    const scripts = [
+    const v = "?v=3";
         BASE + "/bundle/tampilan.bundle.js",
         BASE + "/bundle/teks.bundle.js",
         BASE + "/bundle/aksesibilitas.bundle.js"
