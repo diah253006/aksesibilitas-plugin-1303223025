@@ -72,6 +72,12 @@
     pointer-events: none;
     display: none!important;
 }
+.hide {
+    transform: translateY(-50%) translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+    display: none !important;
+}
 
 
 /* TAB */
@@ -106,8 +112,7 @@
     left: 50%;
     right: 0 !important;
     top: 50% !important; 
-    transform: translateX(-50%);
-    transform: translateY(-50%) !important;
+    transform: translate(-50%, -50%);
     width: 60px;
     height: 60px;
     border-radius: 50%;
