@@ -2,7 +2,7 @@
     console.log("ACCESSIBILITY LOADER INIT");
 
     const CONFIG = {
-        css: "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025/aksesibilitas.css",
+        css: "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/aksesibilitas.css",
         bundles: [
             "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/tampilan.bundle.js",
             "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/teks.bundle.js",
