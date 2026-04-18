@@ -35,9 +35,7 @@
     </div>
 
     <div class="apr-body">
-        ...
-    </div>
-`;
+
             <h5>Aksesibilitas</h5>
 
             <button data-apr-images>Gambar</button>
@@ -53,6 +51,7 @@
             <button data-apr-voice>Voice</button>
 
             <button data-apr-magnifier>Magnifier</button>
+    </div>
         `;
 
         document.body.appendChild(panel);
