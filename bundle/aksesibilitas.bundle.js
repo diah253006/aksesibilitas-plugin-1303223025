@@ -121,7 +121,7 @@
 
     document.addEventListener("click", function (e) {
         //const toggleBtn = e.target.closest("#accessibilityTab, [data-apr-panel-toggle]");
-        const toggleBtn = e.target.closest("#accessibilityTab, [data-apr-toggle], [data-apr-panel-toggle]"
+        const toggleBtn = e.target.closest("#accessibility-tab, [data-apr-toggle], [data-apr-panel-toggle]"
 );
 
         if (toggleBtn) {
