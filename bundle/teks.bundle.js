@@ -12,7 +12,10 @@ function getMainContent() {
 
         set(type, target = "#mainContent", btn = null) {
 
-            const el = document.querySelector(target);
+        let el = document.querySelector(target);
+            if (!el) {
+                el = getMainContent();
+            }
             if (!el) {
                 console.warn("Target tidak ditemukan:", target);
                 return;
@@ -94,25 +97,37 @@ function getMainContent() {
     const Spacing = {
 
         setLine(value, target = "#mainContent") {
-            const el = document.querySelector(target);
+            let el = document.querySelector(target);
+            if (!el) {
+                el = getMainContent();
+            }
             if (!el) return;
             el.style.lineHeight = value;
         },
 
         setLetter(value, target = "#mainContent") {
-            const el = document.querySelector(target);
+            let el = document.querySelector(target);
+            if (!el) {
+                el = getMainContent();
+            }
             if (!el) return;
             el.style.letterSpacing = value + "px";
         },
 
         setWord(value, target = "#mainContent") {
-            const el = document.querySelector(target);
+            let el = document.querySelector(target);
+            if (!el) {
+                el = getMainContent();
+            }
             if (!el) return;
             el.style.wordSpacing = value + "px";
         },
 
         reset(target = "#mainContent") {
-            const el = document.querySelector(target);
+            let el = document.querySelector(target);
+            if (!el) {
+                el = getMainContent();
+            }
             if (!el) return;
             el.style.lineHeight = "1.5";
             el.style.letterSpacing = "0px";
@@ -184,7 +199,10 @@ function getMainContent() {
     const ALIGN = {
 
         set(type, target = "#mainContent") {
-            const el = document.querySelector(target);
+           let el = document.querySelector(target);
+            if (!el) {
+                el = getMainContent();
+            }
 
             if (!el) {
                 console.warn("Target tidak ditemukan:", target);
