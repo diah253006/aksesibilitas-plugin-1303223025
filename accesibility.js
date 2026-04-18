@@ -7,7 +7,21 @@
     // =============================
     const css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025/aksesibilitas.css";
+    css.href = "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/aksesibilitas.css";
+    // =============================
+    // batas awal perubahan
+    // =============================
+    css.onload = () => {
+        console.log("CSS LOADED");
+        injectPanel();
+    };
+
+    css.onerror = () => {
+        console.error("CSS FAILED LOAD");
+    };
+    // =============================
+    // batas akhir perubahan
+    // =============================
     document.head.appendChild(css);
 
     // =============================
@@ -93,15 +107,20 @@
 
         document.body.appendChild(tab);
     }
+    // =============================
+    // batas awal perubahan
+    // =============================
 
     // =============================
     // 4. INIT SAAT DOM READY
     // =============================
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", injectPanel);
-    } else {
-        injectPanel();
-    }
+    //if (document.readyState === "loading") {
+    //    document.addEventListener("DOMContentLoaded", injectPanel);
+    //} else {
+    //    injectPanel();
+    //}
+    // =============================
+    // batas akhir perubahan
+    // =============================
 
 })();
- Ini isi accessibiloty.js
