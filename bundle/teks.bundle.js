@@ -1,3 +1,11 @@
+function getMainContent() {
+    return (
+        document.querySelector("main") ||
+        document.querySelector("[role='main']") ||
+        document.querySelector("#mainContent") ||
+        document.body
+    );
+}
 (function () {
 
     const FONT = {
