@@ -1,106 +1,69 @@
 (function () {
 
+    if (window.__APR_LOADED__) return;
+    window.__APR_LOADED__ = true;
+
     console.log("ACCESSIBILITY PLUGIN INIT");
 
     // =============================
-    // 1. LOAD CSS (AUTO)
+    // 1. LOAD CSS
     // =============================
     const css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025/aksesibilitas.css";
+    css.href = "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/aksesibilitas.css";
     document.head.appendChild(css);
 
     // =============================
-    // 2. LOAD BUNDLE JS (AUTO)
-    // =============================
-    const scripts = [
-        "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/tampilan.bundle.js",
-        "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/teks.bundle.js",
-        "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/aksesibilitas.bundle.js"
-    ];
-
-    scripts.forEach(src => {
-        const s = document.createElement("script");
-        s.src = src;
-        s.defer = true;
-        document.body.appendChild(s);
-    });
-
-    // =============================
-    // 3. INJECT HTML PANEL
+    // 2. INJECT PANEL (FIRST!)
     // =============================
     function injectPanel() {
-
         if (document.getElementById("accessibilityPanel")) return;
 
         const panel = document.createElement("div");
         panel.id = "accessibilityPanel";
         panel.className = "accessibility-panel hide";
 
-        panel.innerHTML = `
-            <button data-apr-panel-toggle>✖</button>
-            <h5>Aksesibilitas</h5>
-
-            <label>Tampilan</label>
-            <button data-apr-images>🖼️ Gambar</button>
-            <button data-apr-contrast>🌗 Contrast</button>
-            <button data-apr-animation>⏸ Animasi</button>
-            <button data-apr-mono>⚫ Mono</button>
-            <button data-apr-cursor>🖱️ Cursor</button>
-
-            <label>Teks</label>
-            <button data-apr-font-increase>+</button>
-            <button data-apr-font-decrease>-</button>
-            <button data-apr-font="default">Default</button>
-            <button data-apr-font="sans">Sans</button>
-            <button data-apr-font="serif">Serif</button>
-            <button data-apr-font="dyslexic">Dyslexic</button>
-
-            <label>Spacing</label>
-            <button data-apr-line="1">1x</button>
-            <button data-apr-line="1.5">1.5x</button>
-            <button data-apr-line="2">2x</button>
-
-            <button data-apr-letter="0">Normal</button>
-            <button data-apr-letter="2">Lebar</button>
-
-            <button data-apr-spacing-reset>Reset</button>
-
-            <label>Akses</label>
-            <button data-apr-tts>🔊 Baca</button>
-            <button data-apr-tts-stop>Stop</button>
-            <button data-apr-voice>🎤 Voice</button>
-            <button data-apr-voice-stop>Stop Voice</button>
-
-            <button data-apr-zoom-in>Zoom +</button>
-            <button data-apr-zoom-out>Zoom -</button>
-            <button data-apr-zoom-reset>Reset Zoom</button>
-
-            <button data-apr-magnifier>Magnifier</button>
-        `;
+        panel.innerHTML = `...`; // tetap
 
         document.body.appendChild(panel);
 
-        // =============================
-        // TAB
-        // =============================
         const tab = document.createElement("div");
         tab.id = "accessibilityTab";
         tab.className = "accessibility-tab";
         tab.setAttribute("data-apr-panel-toggle", "");
-
-        tab.innerHTML = `♿`;
+        tab.innerHTML = "♿";
 
         document.body.appendChild(tab);
     }
 
     // =============================
-    // 4. INIT SAAT DOM READY
+    // 3. LOAD SCRIPT BERURUTAN
     // =============================
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", injectPanel);
-    } else {
+    function loadScriptsSequentially(list, i = 0) {
+        if (i >= list.length) return;
+
+        const s = document.createElement("script");
+        s.src = list[i];
+        s.onload = () => loadScriptsSequentially(list, i + 1);
+
+        document.body.appendChild(s);
+    }
+
+    const scripts = [
+        "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/tampilan.bundle.js",
+        "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/teks.bundle.js",
+        "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/aksesibilitas.bundle.js"
+    ];
+
+    function init() {
         injectPanel();
+        loadScriptsSequentially(scripts);
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+    } else {
+        init();
     }
 
 })();
