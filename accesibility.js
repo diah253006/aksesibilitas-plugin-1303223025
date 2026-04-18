@@ -1,3 +1,35 @@
+injectUI() {
+    const panel = `
+    <div id="apr-1303223025-panel"
+         class="apr-1303223025-panel apr-1303223025-hide"
+         data-alias="accessibilityPanel">
+
+        <!-- header + body -->
+    </div>
+
+    <div id="apr-1303223025-tab"
+         class="apr-1303223025-tab"
+         data-alias="accessibilityTab">♿</div>
+    `;
+
+    document.body.insertAdjacentHTML("beforeend", panel);
+
+    const panelEl = document.getElementById("apr-1303223025-panel");
+    const tabEl   = document.getElementById("apr-1303223025-tab");
+
+    // 👉 Alias ID lama agar bundle lain tetap menemukan elemen
+    panelEl.setAttribute("id", "accessibilityPanel");
+    tabEl.setAttribute("id", "accessibilityTab");
+
+    // (opsional) simpan juga referensi baru via data attribute
+    panelEl.dataset.aprId = "apr-1303223025-panel";
+    tabEl.dataset.aprId   = "apr-1303223025-tab";
+
+    // toggle pakai class baru (sinkron dengan CSS kamu)
+    tabEl.addEventListener("click", () => {
+        panelEl.classList.toggle("apr-1303223025-hide");
+    });
+}
 (function () {
 
     console.log("ACCESSIBILITY PLUGIN INIT");
