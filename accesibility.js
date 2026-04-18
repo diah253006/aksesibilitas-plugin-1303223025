@@ -1,113 +1,107 @@
 (function () {
 
-    if (window.__APR_ACCESSIBILITY__) return;
-    window.__APR_ACCESSIBILITY__ = true;
-
-    console.log("APR ACCESSIBILITY INIT");
-
-    const BASE = "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest";
+    console.log("ACCESSIBILITY PLUGIN INIT");
 
     // =============================
-    // 1. LOAD CSS
+    // 1. LOAD CSS (AUTO)
     // =============================
     const css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = BASE + "/aksesibilitas.css";
+    css.href = "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025/aksesibilitas.css";
     document.head.appendChild(css);
 
     // =============================
-    // 2. INJECT UI
+    // 2. LOAD BUNDLE JS (AUTO)
     // =============================
-    function injectUI() {
+    const scripts = [
+        "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/tampilan.bundle.js",
+        "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/teks.bundle.js",
+        "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/aksesibilitas.bundle.js"
+    ];
 
-        if (document.getElementById("apr-1303223025-panel")) return;
+    scripts.forEach(src => {
+        const s = document.createElement("script");
+        s.src = src;
+        s.defer = true;
+        document.body.appendChild(s);
+    });
+
+    // =============================
+    // 3. INJECT HTML PANEL
+    // =============================
+    function injectPanel() {
+
+        if (document.getElementById("accessibilityPanel")) return;
 
         const panel = document.createElement("div");
         panel.id = "accessibilityPanel";
-        panel.className = "accessibility-panel accessibility-panel.hide";
+        panel.className = "accessibility-panel hide";
 
         panel.innerHTML = `
-            <div class="apr-header">
-                <span>Aksesibilitas</span>
-                <button data-apr-toggle>✕</button>
-            </div>
+            <button data-apr-panel-toggle>✖</button>
+            <h5>Aksesibilitas</h5>
 
-            <div class="apr-body">
-                <button data-apr-images>Gambar</button>
-                <button data-apr-contrast>Kontras</button>
-                <button data-apr-animation>Animasi</button>
-                <button data-apr-mono>Mono</button>
-                <button data-apr-cursor>Cursor</button>
+            <label>Tampilan</label>
+            <button data-apr-images>🖼️ Gambar</button>
+            <button data-apr-contrast>🌗 Contrast</button>
+            <button data-apr-animation>⏸ Animasi</button>
+            <button data-apr-mono>⚫ Mono</button>
+            <button data-apr-cursor>🖱️ Cursor</button>
 
-                <button data-apr-font-increase>+</button>
-                <button data-apr-font-decrease>-</button>
+            <label>Teks</label>
+            <button data-apr-font-increase>+</button>
+            <button data-apr-font-decrease>-</button>
+            <button data-apr-font="default">Default</button>
+            <button data-apr-font="sans">Sans</button>
+            <button data-apr-font="serif">Serif</button>
+            <button data-apr-font="dyslexic">Dyslexic</button>
 
-                <button data-apr-tts>Baca</button>
-                <button data-apr-tts-stop>Stop</button>
+            <label>Spacing</label>
+            <button data-apr-line="1">1x</button>
+            <button data-apr-line="1.5">1.5x</button>
+            <button data-apr-line="2">2x</button>
 
-                <button data-apr-zoom-in>Zoom +</button>
-                <button data-apr-zoom-out>Zoom -</button>
-                <button data-apr-zoom-reset>Reset</button>
+            <button data-apr-letter="0">Normal</button>
+            <button data-apr-letter="2">Lebar</button>
 
-                <button data-apr-magnifier>Magnifier</button>
-            </div>
+            <button data-apr-spacing-reset>Reset</button>
+
+            <label>Akses</label>
+            <button data-apr-tts>🔊 Baca</button>
+            <button data-apr-tts-stop>Stop</button>
+            <button data-apr-voice>🎤 Voice</button>
+            <button data-apr-voice-stop>Stop Voice</button>
+
+            <button data-apr-zoom-in>Zoom +</button>
+            <button data-apr-zoom-out>Zoom -</button>
+            <button data-apr-zoom-reset>Reset Zoom</button>
+
+            <button data-apr-magnifier>Magnifier</button>
         `;
 
         document.body.appendChild(panel);
 
+        // =============================
+        // TAB
+        // =============================
         const tab = document.createElement("div");
-        tab.id = "accesibilityTab";
-        tab.className = "accesibility-tab";
-        tab.setAttribute("data-apr-toggle", "");
-        tab.innerHTML = "♿";
+        tab.id = "accessibilityTab";
+        tab.className = "accessibility-tab";
+        tab.setAttribute("data-apr-panel-toggle", "");
 
-        // 🔥 fallback style supaya selalu terlihat
-        Object.assign(tab.style, {
-          position: "fixed",
-          right: "0",
-          top: "50%",
-          transform: "translateY(-50%)",
-          width: "60px",
-          height: "60px",
-          background: "#2d5bff",
-          color: "#fff",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "28px",
-          zIndex: "9999999",
-          cursor: "pointer"
-        });
+        tab.innerHTML = `♿`;
+
         document.body.appendChild(tab);
     }
 
     // =============================
-    // 3. LOAD SCRIPT SEQUENTIAL
+    // 4. INIT SAAT DOM READY
     // =============================
-    function loadScripts(list, i = 0) {
-        if (i >= list.length) return;
-
-        const s = document.createElement("script");
-        s.src = list[i];
-        s.onload = () => loadScripts(list, i + 1);
-        document.body.appendChild(s);
-    }
-
-    const scripts = [
-        BASE + "/bundle/tampilan.bundle.js?v=5",
-        BASE + "/bundle/teks.bundle.js?v=5",
-        BASE + "/bundle/aksesibilitas.bundle.js?v=5"
-    ];
-
-    function init() {
-        injectUI();
-        loadScripts(scripts);
-    }
-
     if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", init);
+        document.addEventListener("DOMContentLoaded", injectPanel);
     } else {
-        init();
+        injectPanel();
     }
 
 })();
+ Ini isi accessibiloty.js
