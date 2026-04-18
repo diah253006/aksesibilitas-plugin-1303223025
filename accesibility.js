@@ -1,108 +1,109 @@
-injectUI() {
-    const panel = `
-    <div id="apr-1303223025-panel"
-         class="apr-1303223025-panel apr-1303223025-hide"
-         data-alias="accessibilityPanel">
-
-        <!-- header + body -->
-    </div>
-
-    <div id="apr-1303223025-tab"
-         class="apr-1303223025-tab"
-         data-alias="accessibilityTab">♿</div>
-    `;
-
-    document.body.insertAdjacentHTML("beforeend", panel);
-
-    const panelEl = document.getElementById("apr-1303223025-panel");
-    const tabEl   = document.getElementById("apr-1303223025-tab");
-
-    // 👉 Alias ID lama agar bundle lain tetap menemukan elemen
-    panelEl.setAttribute("id", "accessibilityPanel");
-    tabEl.setAttribute("id", "accessibilityTab");
-
-    // (opsional) simpan juga referensi baru via data attribute
-    panelEl.dataset.aprId = "apr-1303223025-panel";
-    tabEl.dataset.aprId   = "apr-1303223025-tab";
-
-    // toggle pakai class baru (sinkron dengan CSS kamu)
-    tabEl.addEventListener("click", () => {
-        panelEl.classList.toggle("apr-1303223025-hide");
-    });
-}
 (function () {
+    console.log("ACCESSIBILITY LOADER INIT");
 
-    console.log("ACCESSIBILITY PLUGIN INIT");
+    const CONFIG = {
+        css: "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025/aksesibilitas.css",
+        bundles: [
+            "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/tampilan.bundle.js",
+            "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/teks.bundle.js",
+            "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/aksesibilitas.bundle.js"
+        ]
+    };
 
-    const css = document.createElement("link");
-    css.rel = "stylesheet";
-    css.href = "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025/aksesibilitas.css";
-    document.head.appendChild(css);
+    // =============================
+    // 1. LOAD CSS (ONCE)
+    // =============================
+    function loadCSS() {
+        if (document.getElementById("apr-css")) return;
 
-    const scripts = [
-        "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/tampilan.bundle.js",
-        "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/teks.bundle.js",
-        "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/aksesibilitas.bundle.js"
-    ];
+        const link = document.createElement("link");
+        link.id = "apr-css";
+        link.rel = "stylesheet";
+        link.href = CONFIG.css;
 
-    scripts.forEach(src => {
-        const s = document.createElement("script");
-        s.src = src;
-        s.async = false;
-        document.body.appendChild(s);
-    });
+        document.head.appendChild(link);
+    }
 
-    function injectPanel() {
-
+    // =============================
+    // 2. INJECT UI (SINGLE SOURCE)
+    // =============================
+    function injectUI() {
         if (document.getElementById("accessibilityPanel")) return;
 
         const panel = document.createElement("div");
         panel.id = "accessibilityPanel";
-        panel.className = "accessibility-panel hide";
+        panel.className = "apr-1303223025-panel apr-1303223025-hide";
 
         panel.innerHTML = `
-    <div class="apr-header">
-        <span>Menu Aksesibilitas</span>
-        <button class="apr-close" data-apr-panel-toggle>✕</button>
-    </div>
+            <div class="apr-header">
+                <span>Aksesibilitas</span>
+                <button class="apr-close" data-apr-panel-toggle>✕</button>
+            </div>
 
-    <div class="apr-body">
+            <div class="apr-body">
 
-            <h5>Aksesibilitas</h5>
+                <h6>Tampilan</h6>
+                <button data-apr-images>Gambar</button>
+                <button data-apr-contrast-toggle>Kontras</button>
+                <button data-apr-animation>Animasi</button>
+                <button data-apr-mono>Mono</button>
+                <button data-apr-cursor>Cursor</button>
 
-            <button data-apr-images>Gambar</button>
-            <button data-apr-contrast>Contrast</button>
-            <button data-apr-animation>Animasi</button>
-            <button data-apr-mono>Mono</button>
-            <button data-apr-cursor>Cursor</button>
+                <h6>Teks</h6>
+                <button data-apr-font-increase>+</button>
+                <button data-apr-font-decrease>-</button>
 
-            <button data-apr-font-increase>+</button>
-            <button data-apr-font-decrease>-</button>
+                <h6>Akses</h6>
+                <button data-apr-tts>Baca</button>
+                <button data-apr-tts-stop>Stop</button>
+                <button data-apr-voice>Voice</button>
+                <button data-apr-voice-stop>Stop Voice</button>
+                <button data-apr-zoom-in>Zoom +</button>
+                <button data-apr-zoom-out>Zoom -</button>
+                <button data-apr-zoom-reset>Reset Zoom</button>
+                <button data-apr-magnifier>Magnifier</button>
 
-            <button data-apr-tts>Baca</button>
-            <button data-apr-voice>Voice</button>
-
-            <button data-apr-magnifier>Magnifier</button>
-    </div>
+            </div>
         `;
 
         document.body.appendChild(panel);
 
         const tab = document.createElement("div");
         tab.id = "accessibilityTab";
-        tab.className = "accessibility-tab";
+        tab.className = "apr-1303223025-tab";
         tab.setAttribute("data-apr-panel-toggle", "");
         tab.innerHTML = "♿";
 
         document.body.appendChild(tab);
 
-        // FIX: toggle panel
-       
+        console.log("UI injected");
+    }
+
+    // =============================
+    // 3. LOAD BUNDLES (ORDERED)
+    // =============================
+    function loadBundles() {
+        CONFIG.bundles.forEach(src => {
+            const script = document.createElement("script");
+            script.src = src;
+            script.defer = true;
+            document.body.appendChild(script);
+        });
+    }
+
+    // =============================
+    // INIT (SAFE)
+    // =============================
+    function init() {
+        loadCSS();
+        injectUI();
+        loadBundles();
+    }
 
     if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", injectPanel);
+        document.addEventListener("DOMContentLoaded", init);
     } else {
-        injectPanel();
+        init();
     }
 
 })();
