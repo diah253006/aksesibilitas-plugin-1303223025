@@ -98,8 +98,8 @@
         console.log("TAB:", tab);
         if (!panel || !tab) return;
 
-       panel.classList.toggle("hide");
-        
+        panel.classList.toggle("hide");
+        tab.classList.toggle("hide");
         },
 
         fontIncrease() {
@@ -120,15 +120,11 @@
     window.APR_PANEL = PANEL;
 
     document.addEventListener("click", function (e) {
-        //const toggleBtn = e.target.closest("#accessibilityTab, [data-apr-panel-toggle]");
-        const toggleBtn = e.target.closest("#accessibility-tab, [data-apr-toggle]"
-);
-
+        const toggleBtn = e.target.closest("#accessibilityTab, [data-apr-panel-toggle]");
         if (toggleBtn) {
-        console.log("TOGGLE CLICKED");
-        PANEL.toggle();
-        return;
-    }
+            PANEL.toggle();
+            return;
+        }
 
         if (e.target.closest("[data-apr-font-increase]")) {
             PANEL.fontIncrease();
@@ -397,7 +393,7 @@ TTS.start(target);
         },
 
         apply() {
-            document.documentElement.style.zoom = zoomLevel;
+            document.body.style.transform = `scale(${zoomLevel})`;
             document.body.style.transformOrigin = "top left";
             document.body.style.width = (100 / zoomLevel) + "%";
         }
