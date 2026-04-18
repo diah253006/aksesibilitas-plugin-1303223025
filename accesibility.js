@@ -58,12 +58,7 @@
         document.body.appendChild(tab);
 
         // FIX: toggle panel
-        document.addEventListener("click", function (e) {
-            if (e.target.closest("[data-apr-panel-toggle]")) {
-                panel.classList.toggle("hide");
-            }
-        });
-    }
+       
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", injectPanel);
