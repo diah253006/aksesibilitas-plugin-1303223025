@@ -120,7 +120,9 @@
     window.APR_PANEL = PANEL;
 
     document.addEventListener("click", function (e) {
-        const toggleBtn = e.target.closest("#accessibilityTab, [data-apr-panel-toggle]");
+        //const toggleBtn = e.target.closest("#accessibilityTab, [data-apr-panel-toggle]");
+        const toggleBtn = e.target.closest("#apr-1303223025-tab, [data-apr-toggle], [data-apr-panel-toggle]"
+);
         if (toggleBtn) {
             PANEL.toggle();
             return;
