@@ -98,7 +98,7 @@
         console.log("TAB:", tab);
         if (!panel || !tab) return;
 
-        panel.classList.toggle("hide");
+        panel.classList.toggle("apr-1303223025-hide");
         
         },
 
