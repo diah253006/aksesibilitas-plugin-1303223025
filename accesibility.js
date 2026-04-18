@@ -31,7 +31,7 @@
         if (document.getElementById("accessibilityPanel")) return;
 
         const panel = document.createElement("div");
-        panel.id = "accessibilityPanel";
+        panel.id = "apr-1303223025-panel";
         panel.className = "apr-1303223025-panel apr-1303223025-hide";
 
         panel.innerHTML = `
@@ -69,7 +69,7 @@
         document.body.appendChild(panel);
 
         const tab = document.createElement("div");
-        tab.id = "accessibilityTab";
+        tab.id = "apr-1303223025-tab";
         tab.className = "apr-1303223025-tab";
         tab.setAttribute("data-apr-panel-toggle", "");
         tab.innerHTML = "♿";
