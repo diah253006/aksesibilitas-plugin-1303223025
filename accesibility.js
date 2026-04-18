@@ -1,109 +1,106 @@
 (function () {
-    console.log("ACCESSIBILITY LOADER INIT");
 
-    const CONFIG = {
-        css: "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/aksesibilitas.css",
-        bundles: [
-            "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/tampilan.bundle.js",
-            "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/teks.bundle.js",
-            "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/aksesibilitas.bundle.js"
-        ]
-    };
+    console.log("ACCESSIBILITY PLUGIN INIT");
 
     // =============================
-    // 1. LOAD CSS (ONCE)
+    // 1. LOAD CSS (AUTO)
     // =============================
-    function loadCSS() {
-        if (document.getElementById("apr-css")) return;
-
-        const link = document.createElement("link");
-        link.id = "apr-css";
-        link.rel = "stylesheet";
-        link.href = CONFIG.css;
-
-        document.head.appendChild(link);
-    }
+    const css = document.createElement("link");
+    css.rel = "stylesheet";
+    css.href = "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025/aksesibilitas.css";
+    document.head.appendChild(css);
 
     // =============================
-    // 2. INJECT UI (SINGLE SOURCE)
+    // 2. LOAD BUNDLE JS (AUTO)
     // =============================
-    function injectUI() {
+    const scripts = [
+        "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/tampilan.bundle.js",
+        "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/teks.bundle.js",
+        "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/bundle/aksesibilitas.bundle.js"
+    ];
+
+    scripts.forEach(src => {
+        const s = document.createElement("script");
+        s.src = src;
+        s.defer = true;
+        document.body.appendChild(s);
+    });
+
+    // =============================
+    // 3. INJECT HTML PANEL
+    // =============================
+    function injectPanel() {
+
         if (document.getElementById("accessibilityPanel")) return;
 
         const panel = document.createElement("div");
-        panel.id = "apr-1303223025-panel";
-        panel.className = "apr-1303223025-panel apr-1303223025-hide";
+        panel.id = "accessibilityPanel";
+        panel.className = "accessibility-panel hide";
 
         panel.innerHTML = `
-            <div class="apr-header">
-                <span>Aksesibilitas</span>
-                <button class="apr-close" data-apr-panel-toggle>✕</button>
-            </div>
+            <button data-apr-panel-toggle>✖</button>
+            <h5>Aksesibilitas</h5>
 
-            <div class="apr-body">
+            <label>Tampilan</label>
+            <button data-apr-images>🖼️ Gambar</button>
+            <button data-apr-contrast>🌗 Contrast</button>
+            <button data-apr-animation>⏸ Animasi</button>
+            <button data-apr-mono>⚫ Mono</button>
+            <button data-apr-cursor>🖱️ Cursor</button>
 
-                <h6>Tampilan</h6>
-                <button data-apr-images>Gambar</button>
-                <button data-apr-contrast-toggle>Kontras</button>
-                <button data-apr-animation>Animasi</button>
-                <button data-apr-mono>Mono</button>
-                <button data-apr-cursor>Cursor</button>
+            <label>Teks</label>
+            <button data-apr-font-increase>+</button>
+            <button data-apr-font-decrease>-</button>
+            <button data-apr-font="default">Default</button>
+            <button data-apr-font="sans">Sans</button>
+            <button data-apr-font="serif">Serif</button>
+            <button data-apr-font="dyslexic">Dyslexic</button>
 
-                <h6>Teks</h6>
-                <button data-apr-font-increase>+</button>
-                <button data-apr-font-decrease>-</button>
+            <label>Spacing</label>
+            <button data-apr-line="1">1x</button>
+            <button data-apr-line="1.5">1.5x</button>
+            <button data-apr-line="2">2x</button>
 
-                <h6>Akses</h6>
-                <button data-apr-tts>Baca</button>
-                <button data-apr-tts-stop>Stop</button>
-                <button data-apr-voice>Voice</button>
-                <button data-apr-voice-stop>Stop Voice</button>
-                <button data-apr-zoom-in>Zoom +</button>
-                <button data-apr-zoom-out>Zoom -</button>
-                <button data-apr-zoom-reset>Reset Zoom</button>
-                <button data-apr-magnifier>Magnifier</button>
+            <button data-apr-letter="0">Normal</button>
+            <button data-apr-letter="2">Lebar</button>
 
-            </div>
+            <button data-apr-spacing-reset>Reset</button>
+
+            <label>Akses</label>
+            <button data-apr-tts>🔊 Baca</button>
+            <button data-apr-tts-stop>Stop</button>
+            <button data-apr-voice>🎤 Voice</button>
+            <button data-apr-voice-stop>Stop Voice</button>
+
+            <button data-apr-zoom-in>Zoom +</button>
+            <button data-apr-zoom-out>Zoom -</button>
+            <button data-apr-zoom-reset>Reset Zoom</button>
+
+            <button data-apr-magnifier>Magnifier</button>
         `;
 
         document.body.appendChild(panel);
 
+        // =============================
+        // TAB
+        // =============================
         const tab = document.createElement("div");
-        tab.id = "apr-1303223025-tab";
-        tab.className = "apr-1303223025-tab";
+        tab.id = "accessibilityTab";
+        tab.className = "accessibility-tab";
         tab.setAttribute("data-apr-panel-toggle", "");
-        tab.innerHTML = "♿";
+
+        tab.innerHTML = `♿`;
 
         document.body.appendChild(tab);
-
-        console.log("UI injected");
     }
 
     // =============================
-    // 3. LOAD BUNDLES (ORDERED)
+    // 4. INIT SAAT DOM READY
     // =============================
-    function loadBundles() {
-        CONFIG.bundles.forEach(src => {
-            const script = document.createElement("script");
-            script.src = src;
-            script.defer = true;
-            document.body.appendChild(script);
-        });
-    }
-
-    // =============================
-    // INIT (SAFE)
-    // =============================
-    function init() {
-        loadCSS();
-        injectUI();
-        loadBundles();
-    }
-
     if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", init);
+        document.addEventListener("DOMContentLoaded", injectPanel);
     } else {
-        init();
+        injectPanel();
     }
 
 })();
