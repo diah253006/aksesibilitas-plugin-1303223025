@@ -1,3 +1,4 @@
+console.log("FILE KELOAD");
 (function () {
 
     console.log("ACCESSIBILITY LOADER INIT");
