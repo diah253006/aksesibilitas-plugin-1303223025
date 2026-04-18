@@ -1,21 +1,10 @@
-function getMainContent() {
-    return (
-        document.querySelector("main") ||
-        document.querySelector("[role='main']") ||
-        document.querySelector("#mainContent") ||
-        document.body
-    );
-}
 (function () {
 
     const FONT = {
 
         set(type, target = "#mainContent", btn = null) {
 
-        let el = document.querySelector(target);
-            if (!el) {
-                el = getMainContent();
-            }
+            const el = document.querySelector(target);
             if (!el) {
                 console.warn("Target tidak ditemukan:", target);
                 return;
@@ -97,37 +86,25 @@ function getMainContent() {
     const Spacing = {
 
         setLine(value, target = "#mainContent") {
-            let el = document.querySelector(target);
-            if (!el) {
-                el = getMainContent();
-            }
+            const el = document.querySelector(target);
             if (!el) return;
             el.style.lineHeight = value;
         },
 
         setLetter(value, target = "#mainContent") {
-            let el = document.querySelector(target);
-            if (!el) {
-                el = getMainContent();
-            }
+            const el = document.querySelector(target);
             if (!el) return;
             el.style.letterSpacing = value + "px";
         },
 
         setWord(value, target = "#mainContent") {
-            let el = document.querySelector(target);
-            if (!el) {
-                el = getMainContent();
-            }
+            const el = document.querySelector(target);
             if (!el) return;
             el.style.wordSpacing = value + "px";
         },
 
         reset(target = "#mainContent") {
-            let el = document.querySelector(target);
-            if (!el) {
-                el = getMainContent();
-            }
+            const el = document.querySelector(target);
             if (!el) return;
             el.style.lineHeight = "1.5";
             el.style.letterSpacing = "0px";
@@ -199,10 +176,7 @@ function getMainContent() {
     const ALIGN = {
 
         set(type, target = "#mainContent") {
-           let el = document.querySelector(target);
-            if (!el) {
-                el = getMainContent();
-            }
+            const el = document.querySelector(target);
 
             if (!el) {
                 console.warn("Target tidak ditemukan:", target);
