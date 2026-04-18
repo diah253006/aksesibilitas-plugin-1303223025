@@ -23,8 +23,8 @@
         if (document.getElementById("apr-1303223025-panel")) return;
 
         const panel = document.createElement("div");
-        panel.id = "apr-1303223025-panel";
-        panel.className = "apr-1303223025-panel apr-1303223025-hide";
+        panel.id = "accessibilityPanel";
+        panel.className = "accessibility-panel accessibility-panel.hide";
 
         panel.innerHTML = `
             <div class="apr-header">
@@ -56,8 +56,8 @@
         document.body.appendChild(panel);
 
         const tab = document.createElement("div");
-        tab.id = "apr-1303223025-tab";
-        tab.className = "apr-1303223025-tab";
+        tab.id = "accesibilityTab";
+        tab.className = "accesibility-tab";
         tab.setAttribute("data-apr-toggle", "");
         tab.innerHTML = "♿";
 
@@ -93,10 +93,10 @@
         document.body.appendChild(s);
     }
 
-    const v = "?v=3";
-        BASE + "/bundle/tampilan.bundle.js",
-        BASE + "/bundle/teks.bundle.js",
-        BASE + "/bundle/aksesibilitas.bundle.js"
+    const scripts = [
+        BASE + "/bundle/tampilan.bundle.js?v=5",
+        BASE + "/bundle/teks.bundle.js?v=5",
+        BASE + "/bundle/aksesibilitas.bundle.js?v=5"
     ];
 
     function init() {
