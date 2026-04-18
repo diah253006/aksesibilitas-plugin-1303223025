@@ -29,7 +29,15 @@
         panel.className = "accessibility-panel hide";
 
         panel.innerHTML = `
-            <button data-apr-panel-toggle>Close</button>
+    <div class="apr-header">
+        <span>Menu Aksesibilitas</span>
+        <button class="apr-close" data-apr-panel-toggle>✕</button>
+    </div>
+
+    <div class="apr-body">
+        ...
+    </div>
+`;
             <h5>Aksesibilitas</h5>
 
             <button data-apr-images>Gambar</button>
