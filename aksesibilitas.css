@@ -132,11 +132,10 @@
 }
 
 .apr-body {
-   display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
 }
-
 
 .apr-body button {
     padding: 15px;
