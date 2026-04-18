@@ -29,11 +29,13 @@
   
 }
 
+
+
 .apr-1303223025-hide {
     transform: translateY(-50%) translateX(100%);
      opacity: 0;
     pointer-events: none;
-    display: none;
+    display: none!important;
 }
 
 
@@ -59,10 +61,11 @@
     padding: 12px 14px;
     border-radius: 8px 0 0 8px;
     cursor: pointer;
-    z-index: 999999 !important;
+    z-index: 100000 !important;
 
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
+
 
 /* HIGH CONTRAST */
 .apr-1303223025-contrast {
