@@ -99,7 +99,7 @@
         if (!panel || !tab) return;
 
         panel.classList.toggle("hide");
-        tab.classList.toggle("hide");
+        
         },
 
         fontIncrease() {
