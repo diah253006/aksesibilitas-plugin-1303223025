@@ -1,13 +1,15 @@
 (function () {
 
     console.log("ACCESSIBILITY PLUGIN INIT");
-
+// =============================
+    //awal peubahan
     // =============================
-    // 1. LOAD CSS (AUTO)
+    // =============================
+    // 1. LOAD CSS (AUTO)m
     // =============================
     const css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025/aksesibilitas.css";
+    css.href = "https://cdn.jsdelivr.net/gh/VCTryo0304/aksesibilitas-plugin-1303223025@latest/aksesibilitas.css";
     document.head.appendChild(css);
 
     // =============================
