@@ -7,16 +7,16 @@
     // =============================
     const css = document.createElement("link");
     css.rel = "stylesheet";
-    css.href = "https://cdn.jsdelivr.net/gh/diah253006/aksesibilitas-plugin-1303223025@latest/aksesibilitas.css";
+    css.href = "https://cdn.jsdelivr.net/gh/diah253006/aksesibilitas-plugin-1303223025@main/aksesibilitas.css?v=2";
     document.head.appendChild(css);
 
     // =============================
     // 2. LOAD BUNDLE JS (AUTO)
     // =============================
     const scripts = [
-        "https://cdn.jsdelivr.net/gh/diah253006/aksesibilitas-plugin-1303223025@latest/bundle/tampilan.bundle.js",
-        "https://cdn.jsdelivr.net/gh/diah253006/aksesibilitas-plugin-1303223025@latest/bundle/teks.bundle.js",
-        "https://cdn.jsdelivr.net/gh/diah253006/aksesibilitas-plugin-1303223025@latest/bundle/aksesibilitas.bundle.js"
+        "https://cdn.jsdelivr.net/gh/diah253006/aksesibilitas-plugin-1303223025@main/bundle/tampilan.bundle.js?v=2",
+        "https://cdn.jsdelivr.net/gh/diah253006/aksesibilitas-plugin-1303223025@main/bundle/teks.bundle.js?v=2",
+        "https://cdn.jsdelivr.net/gh/diah253006/aksesibilitas-plugin-1303223025@main/bundle/aksesibilitas.bundle.js?v=2"
     ];
 
     scripts.forEach(src => {
